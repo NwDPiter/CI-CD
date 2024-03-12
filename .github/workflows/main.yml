@@ -35,7 +35,7 @@ jobs:
       - name: Deploy to Azure VM
         uses: appleboy/scp-action@master
         with:
-          host: azure
+          host: piter
           username: ${{ secrets.SSH_USERNAME }}  # Adicione o nome de usuário SSH como uma secret
           key: ${{ secrets.SSH_PRIVATE_KEY }}    # Adicione a chave SSH como uma secret
           port: 22
