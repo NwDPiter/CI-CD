@@ -40,4 +40,4 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}    # Adicione a chave SSH como uma secret
           port: 22
           source: "./src"  # Diretório local contendo os arquivos a serem copiados
-          target: "/home/user/app"    # Diretório remoto onde os arquivos serão copiados
+          target: "/home/user/app"    # Diretório remoto onde os arquivos serão copiado
