@@ -28,9 +28,6 @@ jobs:
 
 # Build
 
-      - name: Install express, webpack and webpack-cli
-        run: npm install express webpack webpack-cli --save-dev
-
       - name: Build
         run: npm run build
 
