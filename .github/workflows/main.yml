@@ -31,7 +31,8 @@ jobs:
       - name: Build
         run: npm run build
 
-      # Deploy to Azure VM
+# Deploy to Azure VM
+
       - name: Deploy to Azure VM
         uses: appleboy/scp-action@master
         with:
