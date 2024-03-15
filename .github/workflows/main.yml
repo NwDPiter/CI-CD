@@ -37,7 +37,7 @@ jobs:
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.HOST_VM}}
-          username: ${{ secrets.SSH_USERNAME }}  
+          username: ${{ secrets.SSH_USERNAME }}  #teste
           key: ${{ secrets.SSH_PRIVATE_KEY }}    
           port: 22
           source: "./src"  
