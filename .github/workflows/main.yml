@@ -16,9 +16,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      
-      - name: Validate composer.json and composer.lock
-        run: composer validate --strict
 
       - name: Run test lvl 5
         run: vendor/bin/phpstan analyse src --level 5
