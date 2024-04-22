@@ -21,17 +21,5 @@ jobs:
     - name: Validate composer.json and composer.lock
       run: composer validate --strict
 
-    - name: Cache Composer packages  # Armazenar em cache as dependências do Composer. Isso melhora o desempenho de instalações futuras, evitando a necessidade de baixar dependências novamente.
-      id: composer-cache
-      uses: actions/cache@v3
-      with:
-        path: vendor
-        key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-php-
-
-    # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
-    # Docs: https://getcomposer.org/doc/articles/scripts.md
-
      - name: Run test lvl 5
        run: vendor/bin/phpstan analyse src --level 5
