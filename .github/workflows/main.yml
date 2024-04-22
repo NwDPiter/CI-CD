@@ -1,127 +1,36 @@
-
-# to run localy ./bin/act -j test
-name: Tainacan tests
+name: PHP Composer
 
 on:
-  # Run on all pushes and on all pull requests.
-  # Prevent the build from running when there are only irrelevant changes.
   push:
-    paths-ignore:
-      - '**.md'
-      - '**.txt'
+    branches: [ "main" ]
   pull_request:
-    paths-ignore:
-      - '**.md'
-      - '**.txt'
-  # Allow manually triggering the workflow.
-  workflow_dispatch:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
 
 jobs:
-  test:
+  build:
+
     runs-on: ubuntu-latest
 
-    strategy:
-      fail-fast: false
-      matrix:
-        # Notes regarding supported versions in WP:
-        # The base matrix only contains the PHP versions which are supported on all supported WP versions.
-        php: ['7.4', '8.3']
-        wp: ['latest', '5.9']
-        experimental: [false]
-
-        # include:
-          # Complement the builds run via the matrix with high/low WP builds for PHP 7.4 and 8.0.
-          # PHP 8.0 is sort of supported since WP 5.6.
-          # PHP 7.4 is supported since WP 5.3.
-          # - php: '8.0'
-          #   wp: 'latest'
-          #   experimental: true
-          # - php: '8.0'
-          #   wp: '5.6'
-          #   experimental: true
-
-    name: "PHP ${{ matrix.php }} - WP ${{ matrix.wp }}"
-
-    continue-on-error: ${{ matrix.experimental }}
-
-    services:
-      mysql:
-        # WP 5.4 is the first WP version which largely supports MySQL 8.0.
-        # See: https://core.trac.wordpress.org/ticket/49344
-        # During the setting up of these tests, it became clear that MySQL 8.0
-        # in combination with PHP < 7.4 is not properly/sufficiently supported
-        # within WP Core.
-        # See: https://core.trac.wordpress.org/ticket/52496
-        image: mysql:8.0
-        env:
-          MYSQL_ALLOW_EMPTY_PASSWORD: false
-        ports:
-          - 3306:3306
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=10s --health-retries=10
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
-      - name: Install PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: ${{ matrix.php }}
-          coverage: none
-          # The PHP 5.6 and 7.0 images don't include mysql[i] by default.
-          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, mysql, mysqli, pdo_mysql, bcmath, soap, intl, gd, exif, iconv, imagick
-      
-      - name: Check PHP Version
-        run: php -v
+    - name: Validate composer.json and composer.lock
+      run: composer validate --strict
 
-      - name: install tools deps
-        run: sudo apt install mariadb-client -y
+    - name: Cache Composer packages  # Armazenar em cache as dependências do Composer. Isso melhora o desempenho de instalações futuras, evitando a necessidade de baixar dependências novamente.
+      id: composer-cache
+      uses: actions/cache@v3
+      with:
+        path: vendor
+        key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-php-
 
-      - name: Add bootstrap-config
-        run: |
-          mv ./tests/bootstrap-config-sample.php ./tests/bootstrap-config.php
+    # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
+    # Docs: https://getcomposer.org/doc/articles/scripts.md
 
-      - name: Install WP Tests
-        run: |
-          ./tests/bin/install-wp-tests.sh wordpress_test root "" /tmp/wordpress 127.0.0.1:3306 ${{ matrix.wp }}
-
-      - name: Install and Setup
-        run: |
-          mkdir /tmp/wordpress/wordpress-test/wp-content/uploads
-          chmod -R 777 /tmp/wordpress/wordpress-test/wp-content/uploads
-
-      # On WP 5.2, PHPUnit 5.x, 6.x and 7.x are supported.
-      # On PHP >= 8.0, PHPUnit 7.5+ is needed, no matter what.
-      - name: Determine supported PHPUnit version
-        id: set_phpunit
-        run: |
-          if [[ "${{ matrix.php }}" > "8.0" ]]; then
-            wget https://phar.phpunit.de/phpunit-9.6.16.phar -P /tmp
-            chmod +x /tmp/phpunit-9.6.16.phar
-            mv /tmp/phpunit-9.6.16.phar /usr/local/bin/phpunit
-          else 
-            wget https://phar.phpunit.de/phpunit-6.5.7.phar -P /tmp
-            chmod +x /tmp/phpunit-6.5.7.phar
-            mv /tmp/phpunit-6.5.7.phar /usr/local/bin/phpunit
-          fi
-
-      # Install dependencies and handle caching in one go.
-      # @link https://github.com/marketplace/actions/install-composer-dependencies
-      - name: Install Composer dependencies for PHP < 8.0
-        if: ${{ matrix.php >= 7.3 && matrix.php < 8.0 }}
-        uses: "ramsey/composer-install@v1"
-
-      # For the PHP 8.0 and above, we need to install with ignore platform reqs as not all dependencies allow it yet.
-      - name: Install Composer dependencies for PHP >= 8.0
-        if: ${{ matrix.php >= 8.0 }}
-        uses: "ramsey/composer-install@v1"
-        with:
-          composer-options: --ignore-platform-reqs
-
-      - name: Run the unit tests - single site
-        run: /usr/local/bin/phpunit
-
-      # - name: Run the unit tests - multisite
-      #   run: src/vendor/bin/phpunit
-      #   env:
-      #     WP_MULTISITE: 1
+     - name: Run test lvl 5
+       run: vendor/bin/phpstan analyse src --level 5
