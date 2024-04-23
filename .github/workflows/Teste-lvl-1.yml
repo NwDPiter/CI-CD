@@ -1,6 +1,7 @@
 name: Teste-lvl-1
 
-workflow_dispatch:
+on:
+  workflow_dispatch:  
 
 jobs:
   level1:
