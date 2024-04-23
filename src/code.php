@@ -10,7 +10,7 @@ function fatorial($n) {
 }
 
 // Função para verificar se um número é primo
-function isPrimo($um) {
+function isPrimo($num) {
     if ($num <= 1) {
         return false;
     }
@@ -30,7 +30,7 @@ function isPrimoFatorial($num) {
 // Função para verificar se uma palavra é um palíndromo
 function isPalindromo($str) {
     $str = strtolower(str_replace(' ', '', $str));
-    return $str == strrev($st);
+    return $str == strrev($str);
 }
 
 // Função para converter uma string para camelCase

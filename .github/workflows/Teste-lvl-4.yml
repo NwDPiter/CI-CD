@@ -1,0 +1,24 @@
+name: Test PHP
+
+on:
+  push:
+    branches: 
+      - main
+  pull_request:
+    branches: 
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    needs: Teste-lvl-3
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Run test lvl 5
+        run: vendor/bin/phpstan analyse src --level 4

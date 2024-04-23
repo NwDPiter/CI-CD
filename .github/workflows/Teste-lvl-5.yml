@@ -1,4 +1,4 @@
-name: PHP Composer
+name: Test PHP
 
 on:
   push:
@@ -14,6 +14,9 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    needs: Teste-lvl-4
+
     steps:
       - uses: actions/checkout@v3
 
