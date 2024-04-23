@@ -1,0 +1,50 @@
+name: Main Workflow
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test_level_1:
+    runs-on: ubuntu-latest
+    name: Test Level 1
+    steps:
+      - name: Run test lvl 1
+        uses: ./teste-lvl-1.yml
+
+  test_level_2:
+    runs-on: ubuntu-latest
+    needs: test_level_1
+    name: Test Level 2
+    steps:
+      - name: Run test lvl 2
+        uses: ./teste-lvl-2.yml
+
+  test_level_3:
+    runs-on: ubuntu-latest
+    needs: test_level_2
+    name: Test Level 3
+    steps:
+      - name: Run test lvl 3
+        uses: ./teste-lvl-3.yml
+
+  test_level_4:
+    runs-on: ubuntu-latest
+    needs: test_level_3
+    name: Test Level 4
+    steps:
+      - name: Run test lvl 4
+        uses: ./teste-lvl-4.yml
+
+  test_level_5:
+    runs-on: ubuntu-latest
+    needs: test_level_4
+    name: Test Level 5
+    steps:
+      - name: Run test lvl 5
+        uses: ./teste-lvl-5.yml
+
