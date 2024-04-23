@@ -14,7 +14,7 @@ jobs:
     name: Test Level 1
     steps:
       - name: Run test lvl 1
-        uses: ./teste-lvl-1.yml
+        uses: ./Testes/teste-lvl-1.yml
 
   test_level_2:
     runs-on: ubuntu-latest
@@ -22,7 +22,7 @@ jobs:
     name: Test Level 2
     steps:
       - name: Run test lvl 2
-        uses: ./teste-lvl-2.yml
+        uses: ./Testes/teste-lvl-2.yml
 
   test_level_3:
     runs-on: ubuntu-latest
@@ -30,7 +30,7 @@ jobs:
     name: Test Level 3
     steps:
       - name: Run test lvl 3
-        uses: ./teste-lvl-3.yml
+        uses: ./Testes/teste-lvl-3.yml
 
   test_level_4:
     runs-on: ubuntu-latest
@@ -38,7 +38,7 @@ jobs:
     name: Test Level 4
     steps:
       - name: Run test lvl 4
-        uses: ./teste-lvl-4.yml
+        uses: ./Testes/teste-lvl-4.yml
 
   test_level_5:
     runs-on: ubuntu-latest
@@ -46,5 +46,5 @@ jobs:
     name: Test Level 5
     steps:
       - name: Run test lvl 5
-        uses: ./teste-lvl-5.yml
+        uses: ./Testes/teste-lvl-5.yml
 
