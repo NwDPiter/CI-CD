@@ -65,7 +65,7 @@ $num = 7;
 echo "$num é primo? " . (isPrimo($num) ? "Sim" : "Não") . "\n";
 
 $num = 7;
-echo "$num é primo usando fatorial? " . (isPrimoFatorial($num) ? "Sim" : "Não") . "\n";
+echo "$nu é primo usando fatorial? " . (isPrimoFatorial($num) ? "Sim" : "Não") . "\n";
 
 $str = "Ame a ema";
 echo "$str é um palíndromo? " . (isPalindromo($str) ? "Sim" : "Não") . "\n";
@@ -77,7 +77,7 @@ $a = 24;
 $b = 36;
 echo "MDC de $a e $b é: " . mdc($a, $b) . "\n";
 
-$min = 10;
+$min = 10
 $max = 50;
 echo "Número aleatório entre $min e $max é: " . randIntervalo($min, $max) . "\n";
 
