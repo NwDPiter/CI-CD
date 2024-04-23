@@ -1,0 +1,13 @@
+name: Teste-lvl-6
+
+on:
+  workflow_dispatch:  
+
+jobs:
+  level1:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Run test lvl 6
+        run: vendor/bin/phpstan analyse src --level 6

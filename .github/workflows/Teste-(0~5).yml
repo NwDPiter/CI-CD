@@ -1,4 +1,4 @@
-name: Test PHP with dependency
+name: Test PHP (0~5)
 
 on:
   push:
@@ -12,6 +12,14 @@ permissions:
   contents: read
 
 jobs:
+
+  level0:
+   runs-on: ubuntu-latest
+   steps:
+     - uses: actions/checkout@v3
+     - name: Run test lvl 0
+       run: vendor/bin/phpstan analyse src --level 0
+   
   level1:
     runs-on: ubuntu-latest
     steps:
