@@ -1,0 +1,25 @@
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/11.1/phpunit.xsd"
+         bootstrap="vendor/autoload.php"
+         colors="true"
+         stopOnFailure="false">
+
+    <php>
+        <ini name="display_errors" value="true"/>
+        <!-- Defina o diretório do seu código-fonte (src) aqui -->
+        <includePath>src</includePath>
+    </php>
+
+    <testsuites>
+        <!-- Suíte para testes unitários -->
+        <testsuite name="unit">
+            <directory>tests/unit</directory>
+        </testsuite>
+
+        <!-- Suíte para testes de itens falsos -->
+        <testsuite name="faker">
+            <directory>tests/faker</directory>   
+        </testsuite>
+    </testsuites>
+
+</phpunit>
