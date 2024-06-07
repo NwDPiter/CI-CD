@@ -111,5 +111,5 @@ Se tudo de certo, vai aparecer uma tela parecida com essa;
 - As primeiras linha são os resultados os testes
 - ('''') A quantidade de teste feitos, Tempo e Memoria usada.
 - O (OK) significa que deu tudo certo 
-    - 7 testes realizados e 16 acertos
+    - 2 testes realizados e 4 acertos
 
